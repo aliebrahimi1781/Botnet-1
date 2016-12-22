@@ -19,11 +19,6 @@ public class CommandInterpreter {
                                     .collect(Collectors.toList());
 
         // if the command exists, return the list containing the command.
-        if (!commands.contains(retVal.get(0))) {
-            return Optional.empty();
-        }
-        else {
-            return Optional.of(retVal);
-        }
+        return (commands.contains(retVal.get(0))) ? Optional.empty() : Optional.of(retVal);
     }
 }
