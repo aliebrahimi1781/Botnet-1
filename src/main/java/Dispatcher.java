@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by seth on 12/21/16.
@@ -8,6 +7,8 @@ import java.util.Map;
 public class Dispatcher {
     private Map<String, Runnable> func;
     private Status status;
+    private List<String> command;
+    Optional<List<String>> opt;
 
     public Dispatcher() {
         func = new HashMap<>();
@@ -16,22 +17,32 @@ public class Dispatcher {
         func.put("MitM", this::MitM);
         func.put("Spam", this::Spam);
         func.put("Query", this::Query);
+        func.put("Help", this::Help);
         status = Status.DONE;
     }
 
-    private void Query() {
+    private Status Help() {
+        return Status.DONE;
     }
 
-    private void Spam() {
+    private Status Query() {
+        return Status.DONE;
     }
 
-    private void MitM() {
+    private Status Spam() {
+        return Status.DONE;
     }
 
-    private void DDoS() {
+    private Status MitM() {
+        return Status.DONE;
     }
 
-    private void Keylogger() {
+    private Status DDoS() {
+        return Status.DONE;
+    }
+
+    private Status Keylogger() {
+        return Status.DONE;
     }
 
     /**
@@ -40,8 +51,9 @@ public class Dispatcher {
      * @return The status of the requested operation.
      */
     public Status Dispatch(String command) {
-
-        return status;
-
+        opt = CommandInterpreter.toList(command);
+        opt.orElse(new LinkedList<String>(){{add("Help");}});
+        func.get(opt.get().get(0));
+        return Status.DONE;
     }
 }
