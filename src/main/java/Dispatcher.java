@@ -18,6 +18,12 @@ public class Dispatcher {
     }
 
     private static final Command HELP = (args) -> {
+        if (args[0].toLowerCase().equals("help")) {
+            System.out.println(Tools.HelpMessage());
+        }
+        else {
+            System.out.println(Tools.HelpMessage(Status.COMMAND_NOT_FOUND));
+        }
         return Status.DONE;
     };
 
