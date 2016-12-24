@@ -7,7 +7,7 @@ import java.util.Set;
 
 enum Status {
     WAITING, RUNNING, DONE, COMMAND_NOT_FOUND,
-    COULD_NOT_EXECUTE, ERROR
+    COULD_NOT_EXECUTE, ERROR, INIT
 };
 
 class Tools {
@@ -20,7 +20,7 @@ class Tools {
         add("Help");
     }};
 
-    static String HelpMessage() {
+    static String helpMessage() {
         StringBuilder msg = new StringBuilder("Possible Commands:\n");
         for (String s : (String[])commands.toArray()) {
             msg.append(s).append("\n");
@@ -28,7 +28,7 @@ class Tools {
         return msg.toString();
     }
 
-    static String HelpMessage(Status stat) {
-        return stat + "\n" + HelpMessage();
+    static String helpMessage(Status stat) {
+        return stat + "\n" + helpMessage();
     }
 }

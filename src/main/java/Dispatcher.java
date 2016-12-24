@@ -19,10 +19,10 @@ public class Dispatcher {
 
     private static final Command HELP = (args) -> {
         if (args[0].toLowerCase().equals("help")) {
-            System.out.println(Tools.HelpMessage());
+            System.out.println(Tools.helpMessage());
         }
         else {
-            System.out.println(Tools.HelpMessage(Status.COMMAND_NOT_FOUND));
+            System.out.println(Tools.helpMessage(Status.COMMAND_NOT_FOUND));
         }
         return Status.DONE;
     };
@@ -52,7 +52,7 @@ public class Dispatcher {
      * @param command the full command requested by the caller including command name and arguments.
      * @return The status of the requested operation.
      */
-    public Status Dispatch(String commandLine) {
+    public Status dispatch(String commandLine) {
         String[] args = commandLine.split("\\s");
         return Optional.ofNullable(commands.get(args[0]))
                 .orElse(HELP)
