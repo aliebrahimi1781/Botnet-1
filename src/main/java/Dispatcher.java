@@ -5,55 +5,55 @@ import java.util.*;
  */
 
 public class Dispatcher {
-    private Map<String, Runnable> func;
-    private Status status;
-    private List<String> command;
-    Optional<List<String>> opt;
+    private Map<String, Command> commands;
 
     public Dispatcher() {
-        func = new HashMap<>();
-        func.put("Keylogger", this::Keylogger);
-        func.put("DDoS", this::DDoS);
-        func.put("MitM", this::MitM);
-        func.put("Spam", this::Spam);
-        func.put("Query", this::Query);
-        func.put("Help", this::Help);
-        status = Status.DONE;
+        commands = new HashMap<>();
+        commands.put("Keylogger", KEYLOGGER);
+        commands.put("DDoS", DDOS);
+        commands.put("MitM", MITM);
+        commands.put("Spam", SPAM);
+        commands.put("Query", QUERY);
+        commands.put("Help", HELP);
     }
 
-    private Status Help() {
+    private static final Command HELP = (args) -> {
         return Status.DONE;
-    }
+    };
 
-    private Status Query() {
+    private static final Command QUERY = (args) -> {
         return Status.DONE;
-    }
+    };
 
-    private Status Spam() {
+    private static final Command SPAM = (args) -> {
         return Status.DONE;
-    }
+    };
 
-    private Status MitM() {
+    private static final Command MITM = (args) -> {
         return Status.DONE;
-    }
+    };
 
-    private Status DDoS() {
+    private static final Command DDOS = (args) -> {
         return Status.DONE;
-    }
+    };
 
-    private Status Keylogger() {
+    private static final Command KEYLOGGER = (args) -> {
         return Status.DONE;
-    }
+    };
 
     /**
      * Execute the given command on a new process.
      * @param command the full command requested by the caller including command name and arguments.
      * @return The status of the requested operation.
      */
-    public Status Dispatch(String command) {
-        opt = CommandInterpreter.toList(command);
-        opt.orElse(new LinkedList<String>(){{add("Help");}});
-        func.get(opt.get().get(0));
-        return Status.DONE;
+    public Status Dispatch(String commandLine) {
+        String[] args = commandLine.split("\\s");
+        return Optional.ofNullable(commands.get(args[0]))
+                .orElse(HELP)
+                .execute(args);
     }
+}
+
+interface Command {
+    Status execute(String[] args);
 }
