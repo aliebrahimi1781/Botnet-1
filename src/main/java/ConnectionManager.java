@@ -1,9 +1,16 @@
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 /**
  * Created by seth on 12/21/16.
  */
 public class ConnectionManager {
 
+    private BlockingQueue<Bot> connected;
 
+    public ConnectionManager() {
+        connected = new LinkedBlockingQueue<Bot>();
+    }
     /**
      * Connect the given bot to the Command and Control.
      * If the bot has not been initialized, initialize it.
@@ -11,7 +18,17 @@ public class ConnectionManager {
      * @return true if the connection was established.
      */
     public boolean connect(Bot bot) {
-        return false;
+        try {
+            connected.put(bot);
+        } catch (InterruptedException e) {
+            return false;
+        }
+        if (bot.status == Status.INIT) {
+            // Somehow get initialization info from C&C
+            CommandInterpreter cmdInt = new CommandInterpreter(bot);
+            cmdInt.queryInitialization();
+        }
+        return true;
     }
 
     /**
@@ -30,5 +47,4 @@ public class ConnectionManager {
     public Object poll() {
         return new Object();
     }
-
 }
