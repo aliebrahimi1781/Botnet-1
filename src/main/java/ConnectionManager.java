@@ -26,7 +26,7 @@ public class ConnectionManager {
         if (bot.status == Status.INIT) {
             // Somehow get initialization info from C&C
             CommandInterpreter cmdInt = new CommandInterpreter(bot);
-            cmdInt.queryInitialization();
+            return cmdInt.queryInitialization();
         }
         return true;
     }
